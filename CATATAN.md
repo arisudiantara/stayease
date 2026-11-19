@@ -1,0 +1,1 @@
+tujuan latihan, target aplikasi, serta satu risiko penggunaan AI yang ingin diperiksa.

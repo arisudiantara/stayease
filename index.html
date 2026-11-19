@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayEase — Katalog Kamar Homestay</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#konten-utama">Lewati ke konten utama</a>
+
+    <header class="navbar">
+      <div class="container navbar__inner">
+        <a class="navbar__brand" href="#katalog" data-view-link="katalog">StayEase</a>
+        <nav aria-label="Navigasi utama">
+          <ul class="navbar__nav">
+            <li><a href="#katalog" data-view-link="katalog">Katalog</a></li>
+            <li><a href="#dashboard" data-view-link="dashboard">Dashboard</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="konten-utama" class="container">
+      <section id="view-katalog" aria-labelledby="judul-katalog">
+        <div class="hero">
+          <h1 id="judul-katalog">Menginap nyaman, pesan lewat WhatsApp</h1>
+          <p>Pilih kamar homestay yang cocok, lalu hubungi pengelola langsung.</p>
+        </div>
+      </section>
+
+      <section id="view-dashboard" aria-labelledby="judul-dashboard" hidden>
+        <h2 id="judul-dashboard">Dashboard pengelola</h2>
+        <p>Kelola data kamar homestay.</p>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <p>Aplikasi demo. Data kamar disimpan di browser ini.</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
