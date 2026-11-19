@@ -3,40 +3,483 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="StayEase — katalog kamar homestay dengan dashboard pengelola dan penyimpanan lokal."
+    />
     <title>StayEase — Katalog Kamar Homestay</title>
   </head>
-  <body>
+  <body id="atas">
     <a class="skip-link" href="#konten-utama">Lewati ke konten utama</a>
 
     <header class="navbar">
       <div class="container navbar__inner">
-        <a class="navbar__brand" href="#katalog" data-view-link="katalog">StayEase</a>
+        <a class="navbar__brand" href="#katalog" data-view-link="katalog">
+          StayEase<span class="navbar__dot" aria-hidden="true">.</span>
+        </a>
         <nav aria-label="Navigasi utama">
           <ul class="navbar__nav">
             <li><a href="#katalog" data-view-link="katalog">Katalog</a></li>
-            <li><a href="#dashboard" data-view-link="dashboard">Dashboard</a></li>
+            <li>
+              <a href="#view-dashboard" data-view-link="dashboard">Dashboard</a>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
 
     <main id="konten-utama" class="container">
-      <section id="view-katalog" aria-labelledby="judul-katalog">
-        <div class="hero">
-          <h1 id="judul-katalog">Menginap nyaman, pesan lewat WhatsApp</h1>
-          <p>Pilih kamar homestay yang cocok, lalu hubungi pengelola langsung.</p>
+      <div id="notice" class="notice" role="status" hidden>
+        <p id="notice-pesan"></p>
+        <button type="button" id="notice-tutup" class="notice__tutup">
+          Tutup
+        </button>
+      </div>
+
+      <section
+        id="katalog"
+        class="view view--katalog"
+        data-view="katalog"
+        aria-busy="true"
+      >
+        <div class="hero" aria-labelledby="judul-hero">
+          <div class="hero__teks">
+            <p class="eyebrow">Homestay · StayEase</p>
+            <h1 id="judul-hero">Menginap nyaman, pesan lewat WhatsApp</h1>
+            <p class="hero__deskripsi">
+              Pilih kamar homestay yang cocok, lalu hubungi pengelola langsung.
+            </p>
+            <a class="btn btn--primary" href="#katalog">Lihat katalog</a>
+          </div>
+
+          <div class="hero__art" aria-hidden="true">
+            <svg class="hero__ilustrasi" viewBox="0 0 520 420" focusable="false">
+              <rect x="8" y="8" width="504" height="404" rx="28" fill="#fffdf8" />
+              <rect
+                x="52"
+                y="46"
+                width="172"
+                height="132"
+                rx="12"
+                fill="#e4ebd9"
+                stroke="#3e5f3f"
+                stroke-width="4"
+              />
+              <path
+                d="M138 46v132M52 112h172"
+                stroke="#3e5f3f"
+                stroke-width="4"
+              />
+              <circle
+                cx="390"
+                cy="92"
+                r="34"
+                fill="#fbebd0"
+                stroke="#8a4b0f"
+                stroke-width="4"
+              />
+              <path
+                d="M390 58v40M372 92h36"
+                stroke="#8a4b0f"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+              <rect
+                x="52"
+                y="206"
+                width="26"
+                height="132"
+                rx="12"
+                fill="#3e5f3f"
+              />
+              <rect
+                x="72"
+                y="228"
+                width="330"
+                height="72"
+                rx="14"
+                fill="#e8dcc2"
+                stroke="#3e5f3f"
+                stroke-width="4"
+              />
+              <rect
+                x="64"
+                y="246"
+                width="346"
+                height="52"
+                rx="16"
+                fill="#fffdf8"
+                stroke="#3e5f3f"
+                stroke-width="4"
+              />
+              <rect x="92" y="256" width="92" height="32" rx="10" fill="#e4ebd9" />
+              <rect x="196" y="256" width="92" height="32" rx="10" fill="#f4ecdc" />
+              <path
+                d="M72 300v46M402 300v46"
+                stroke="#3e5f3f"
+                stroke-width="6"
+                stroke-linecap="round"
+              />
+              <ellipse cx="262" cy="368" rx="176" ry="24" fill="#e4ebd9" />
+              <path
+                d="M436 330c-22-28-26-62-10-92 24 16 38 44 30 74l-20 18Z"
+                fill="#e4ebd9"
+                stroke="#3e5f3f"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M436 330c16-30 44-44 70-40-2 28-24 52-54 58l-16-18Z"
+                fill="#dbe7cd"
+                stroke="#3e5f3f"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M430 328h64l-8 46h-48l-8-46Z"
+                fill="#e8dcc2"
+                stroke="#3e5f3f"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="katalog">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Pilihan menginap</p>
+              <h2 id="judul-katalog" tabindex="-1">Katalog kamar</h2>
+            </div>
+            <p class="hasil" id="hasil-kamar" role="status" aria-live="polite">
+              Memuat kamar…
+            </p>
+          </div>
+
+          <div class="toolbar">
+            <div class="form-group toolbar__cari">
+              <label class="form-label" for="cari-kamar">Cari kamar</label>
+              <div class="search-field">
+                <svg
+                  class="search-field__ikon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <circle
+                    cx="11"
+                    cy="11"
+                    r="7"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="m16 16 5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <input
+                  type="search"
+                  id="cari-kamar"
+                  class="form-control"
+                  placeholder="Nama, tipe, atau deskripsi"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="filter-tipe">Tipe</label>
+              <select id="filter-tipe" class="form-select">
+                <option value="semua">Semua tipe</option>
+                <option value="Standard">Standard</option>
+                <option value="Deluxe">Deluxe</option>
+                <option value="Family">Family</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="filter-status">Ketersediaan</label>
+              <select id="filter-status" class="form-select">
+                <option value="semua">Semua</option>
+                <option value="tersedia">Tersedia</option>
+                <option value="tidak-tersedia">Tidak tersedia</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="filter-urut">Urutkan</label>
+              <select id="filter-urut" class="form-select">
+                <option value="default">Urutan default</option>
+                <option value="termurah">Harga termurah</option>
+                <option value="termahal">Harga termahal</option>
+                <option value="nama-az">Nama A–Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="kamar-grid" id="daftar-kamar"></div>
         </div>
       </section>
 
-      <section id="view-dashboard" aria-labelledby="judul-dashboard" hidden>
-        <h2 id="judul-dashboard">Dashboard pengelola</h2>
-        <p>Kelola data kamar homestay.</p>
+      <section
+        id="view-dashboard"
+        class="view dashboard"
+        data-view="dashboard"
+        aria-labelledby="judul-dashboard"
+        hidden
+      >
+        <div class="dashboard-head">
+          <div>
+            <p class="eyebrow">Pengelola</p>
+            <h2 id="judul-dashboard" tabindex="-1">Dashboard pengelola</h2>
+            <p class="dashboard-subjudul">Kelola data kamar homestay.</p>
+          </div>
+          <div class="dashboard-aksi">
+            <button type="button" id="btn-reset" class="btn btn--secondary">
+              Reset data demo
+            </button>
+            <button type="button" id="btn-tambah" class="btn btn--primary">
+              + Tambah kamar
+            </button>
+          </div>
+        </div>
+
+        <p id="status-dashboard" class="status" role="status" aria-live="polite"></p>
+
+        <div class="ringkasan" role="status" aria-live="polite">
+          <div class="ringkasan__kartu">
+            <span class="ringkasan__label">Total kamar</span>
+            <strong id="total-kamar" class="ringkasan__angka">0</strong>
+          </div>
+          <div class="ringkasan__kartu">
+            <span class="ringkasan__label">Kamar tersedia</span>
+            <strong id="total-tersedia" class="ringkasan__angka">0</strong>
+          </div>
+        </div>
+
+        <div
+          id="ringkasan-kategori"
+          class="ringkasan-kategori"
+          role="status"
+          aria-live="polite"
+          aria-label="Ringkasan kategori kamar"
+        ></div>
+
+        <h3 class="dashboard-daftar-judul">Daftar kamar</h3>
+
+        <div class="tabel-wrap" id="tabel-wrap">
+          <table class="tabel-kamar" aria-label="Daftar kamar">
+            <thead>
+              <tr>
+                <th scope="col">Foto</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Tipe</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Kapasitas</th>
+                <th scope="col">Status</th>
+                <th scope="col">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-kamar-body"></tbody>
+          </table>
+        </div>
+
+        <div id="dashboard-empty" class="empty-state" hidden>
+          <h3>Belum ada kamar di dashboard</h3>
+          <p>Tambahkan kamar pertama atau kembalikan data contoh.</p>
+          <button type="button" id="btn-tambah-empty" class="btn btn--primary">
+            Tambah kamar
+          </button>
+        </div>
       </section>
     </main>
 
     <footer class="footer container">
-      <p>Aplikasi demo. Data kamar disimpan di browser ini.</p>
+      <p>
+        Aplikasi demo. Data kamar disimpan di browser ini dan dapat hilang bila
+        data browser dihapus.
+      </p>
+      <p class="footer__meta">
+        Ilustrasi dibuat lokal dengan SVG; tidak memuat gambar dari internet.
+      </p>
     </footer>
+
+    <dialog id="dialog-form" class="dialog" aria-labelledby="dialog-form-judul">
+      <form id="form-kamar" class="dialog__form" novalidate>
+        <div class="dialog__head">
+          <h2 id="dialog-form-judul">Tambah kamar</h2>
+          <button
+            type="button"
+            id="btn-tutup-form"
+            class="dialog__tutup"
+            aria-label="Tutup"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="dialog__isi">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="field-nama">Nama kamar *</label>
+              <input
+                id="field-nama"
+                name="nama"
+                class="form-control"
+                type="text"
+                maxlength="60"
+                autocomplete="off"
+              />
+              <p class="form-error" id="error-nama" hidden></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-tipe">Tipe *</label>
+              <select id="field-tipe" name="tipe" class="form-select">
+                <option value="Standard">Standard</option>
+                <option value="Deluxe">Deluxe</option>
+                <option value="Family">Family</option>
+              </select>
+              <p class="form-error" id="error-tipe" hidden></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="field-harga"
+                >Harga per malam (Rp) *</label
+              >
+              <input
+                id="field-harga"
+                name="harga"
+                class="form-control"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+              />
+              <p class="form-error" id="error-harga" hidden></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-kapasitas"
+                >Kapasitas (tamu, 1–10) *</label
+              >
+              <input
+                id="field-kapasitas"
+                name="kapasitas"
+                class="form-control"
+                type="number"
+                min="1"
+                max="10"
+                step="1"
+                inputmode="numeric"
+              />
+              <p class="form-error" id="error-kapasitas" hidden></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-baris">
+              <label class="form-label" for="field-deskripsi">Deskripsi</label>
+              <span id="hitung-deskripsi" class="char-count">0 / 300</span>
+            </div>
+            <textarea
+              id="field-deskripsi"
+              name="deskripsi"
+              class="form-control"
+              maxlength="300"
+              rows="3"
+            ></textarea>
+            <p class="form-error" id="error-deskripsi" hidden></p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="field-imageUrl">URL gambar</label>
+            <input
+              id="field-imageUrl"
+              name="imageUrl"
+              class="form-control"
+              type="text"
+              placeholder="/images/kamar-1.svg"
+              autocomplete="off"
+            />
+            <p class="form-help">Kosongkan untuk memakai placeholder lokal.</p>
+            <p class="form-error" id="error-imageUrl" hidden></p>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox">
+              <input
+                id="field-tersedia"
+                name="tersedia"
+                type="checkbox"
+                checked
+              />
+              <span>Tersedia untuk dibooking</span>
+            </label>
+            <p class="form-error" id="error-tersedia" hidden></p>
+          </div>
+        </div>
+
+        <div class="dialog__footer">
+          <button type="button" id="btn-batal-form" class="btn btn--secondary">
+            Batal
+          </button>
+          <button type="submit" class="btn btn--primary">Simpan</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog
+      id="dialog-hapus"
+      class="dialog dialog--kecil"
+      aria-labelledby="dialog-hapus-judul"
+    >
+      <div class="dialog__head">
+        <h2 id="dialog-hapus-judul">Hapus kamar?</h2>
+      </div>
+      <div class="dialog__isi">
+        <p id="teks-hapus"></p>
+      </div>
+      <div class="dialog__footer">
+        <button type="button" id="btn-batal-hapus" class="btn btn--secondary">
+          Batal
+        </button>
+        <button type="button" id="btn-konfirmasi-hapus" class="btn btn--danger">
+          Hapus
+        </button>
+      </div>
+    </dialog>
+
+    <dialog
+      id="dialog-reset"
+      class="dialog dialog--kecil"
+      aria-labelledby="dialog-reset-judul"
+    >
+      <div class="dialog__head">
+        <h2 id="dialog-reset-judul">Reset data demo?</h2>
+      </div>
+      <div class="dialog__isi">
+        <p>
+          Semua perubahan akan diganti dengan 6 kamar contoh. Lanjutkan?
+        </p>
+      </div>
+      <div class="dialog__footer">
+        <button type="button" id="btn-batal-reset" class="btn btn--secondary">
+          Batal
+        </button>
+        <button type="button" id="btn-konfirmasi-reset" class="btn btn--danger">
+          Reset
+        </button>
+      </div>
+    </dialog>
 
     <script type="module" src="/src/main.js"></script>
   </body>

@@ -1,4 +1,5 @@
-// Konstanta konfigurasi dan data kamar contoh (sumber: SPEC.md §4.3).
+// Konstanta katalog dan data kamar contoh StayEase.
+// Seluruh data pada berkas ini fiktif dan non-pribadi.
 
 export const STORAGE_KEY = 'stayease.kamar.v1';
 export const DATA_VERSION = 1;
@@ -15,6 +16,7 @@ export const BATAS = {
   kapasitasMaks: 10,
 };
 
+// Data contoh 6 kamar sesuai SPEC.md §4.3.
 export const KAMAR_CONTOH = [
   {
     id: 'kamar-001',
